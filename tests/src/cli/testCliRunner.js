@@ -288,6 +288,40 @@ module.exports = {
 
   },
 
+  testInitDefaultsOverlappingTags : function(test) {
+    mockery.registerMock('fs', {
+      existsSync : function(module) {
+        if (module == './settings.json') {
+          return false;
+        }
+        return true;
+      }
+    });
+
+    var CliRunner = require('../../../'+ BASE_PATH +'/../lib/runner/cli/clirunner.js');
+    var runner = new CliRunner({
+      config : './nightwatch.json',
+      env : 'default',
+      output : 'output',
+      skiptags : 'home,arctic,danger',
+      tag : 'danger'
+    }).init();
+
+    test.deepEqual(runner.settings.src_folders, ['tests']);
+    test.deepEqual(runner.settings.test_settings, {'default' : {
+      silent: true,
+      custom_commands_path: '',
+      custom_assertions_path: '',
+      page_objects_path: '',
+      output: true,
+      tag_filter: 'danger',
+      skiptags: [ 'home', 'arctic' ]
+    }});
+
+    test.done();
+
+  },
+
   testSetOutputFolder : function(test) {
     mockery.registerMock('fs', {
       existsSync : function(module) {
