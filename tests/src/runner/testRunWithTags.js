@@ -96,7 +96,7 @@ module.exports = {
       output_folder : false,
       start_session : true
     }, function(err, results) {
-      test.equal(Object.keys(results.modules).length, 1);
+      test.equal(Object.keys(results.modules).length, 2);
       test.ok(('otherDemoTagTest' in results.modules.sampleTags.completed));
       test.done();
     });

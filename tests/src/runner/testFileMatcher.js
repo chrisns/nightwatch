@@ -137,7 +137,7 @@ module.exports = {
       skiptags : ['101']
     });
 
-    test.ok(matched === false);
+    test.ok(matched === true);
     test.done();
   },
 
